@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include <QMessageBox>
-#include "object.hpp"
 
 #define TO_QSTRING QString::fromLocal8Bit
 
@@ -19,16 +18,19 @@ public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
 
-private slots:
-    void setNext();
+public slots:
+    void pushButtonAcceptUpClicked();
+    void pushButtonAcceptDownClicked();
+    void pushButtonRejectUpClicked();
+    void pushButtonRejectDownClicked();
     void resetCount();
 
 private:
+    void setNext();
     Ui::Widget *ui;
-
-    Object *accept;
-    Object *reject;
-    Object *next;
+    int accept;
+    int reject;
+    int next;
 };
 
 #endif // WIDGET_HPP

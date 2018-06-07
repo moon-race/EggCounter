@@ -4,39 +4,65 @@
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget),
-    accept(new Object(this)),
-    reject(new Object(this)),
-    next(new Object(this, 1))
+    accept(0),
+    reject(0),
+    next(1)
 {
     ui->setupUi(this);
 
     connect(ui->pushButtonAcceptUp, SIGNAL(clicked()),
-            accept, SLOT(increaseValue()));
+            this, SLOT(pushButtonAcceptUpClicked()));
     connect(ui->pushButtonAcceptDown, SIGNAL(clicked()),
-            accept, SLOT(decreaseValue()));
+            this, SLOT(pushButtonAcceptDownClicked()));
     connect(ui->pushButtonRejectUp, SIGNAL(clicked()),
-            reject, SLOT(increaseValue()));
+            this, SLOT(pushButtonRejectUpClicked()));
     connect(ui->pushButtonRejectDown, SIGNAL(clicked()),
-            reject, SLOT(decreaseValue()));
+            this, SLOT(pushButtonRejectDownClicked()));
     connect(ui->pushButtonRecet, SIGNAL(clicked()),
             this, SLOT(resetCount()));
-
-    connect(accept, SIGNAL(valueChanged(int)),
-            this, SLOT(setNext()));
-    connect(reject, SIGNAL(valueChanged(int)),
-            this, SLOT(setNext()));
-
-    connect(accept, SIGNAL(valueChanged(int)),
-            ui->lcdNumberAccept, SLOT(display(int)));
-    connect(reject, SIGNAL(valueChanged(int)),
-            ui->lcdNumberReject, SLOT(display(int)));
-    connect(next, SIGNAL(valueChanged(int)),
-            ui->lcdNumberNext, SLOT(display(int)));
 }
 
 Widget::~Widget()
 {
     delete ui;
+}
+
+void Widget::pushButtonAcceptUpClicked()
+{
+    accept++;
+    ui->lcdNumberAccept->display(accept);
+    setNext();
+    ui->lcdNumberNext->display(next);
+}
+
+void Widget::pushButtonAcceptDownClicked()
+{
+    if (accept > 0)
+    {
+        accept--;
+        ui->lcdNumberAccept->display(accept);
+        setNext();
+        ui->lcdNumberNext->display(next);
+    }
+}
+
+void Widget::pushButtonRejectUpClicked()
+{
+    reject++;
+    ui->lcdNumberReject->display(reject);
+    setNext();
+    ui->lcdNumberNext->display(next);
+}
+
+void Widget::pushButtonRejectDownClicked()
+{
+    if (reject > 0)
+    {
+        reject--;
+        ui->lcdNumberReject->display(reject);
+        setNext();
+        ui->lcdNumberNext->display(next);
+    }
 }
 
 void Widget::resetCount()
@@ -48,12 +74,16 @@ void Widget::resetCount()
                                       QMessageBox::No);
     if (reply == QMessageBox::Yes)
     {
-        accept->setValue(0);
-        reject->setValue(0);
+        accept = 0;
+        reject = 0;
+        setNext();
+        ui->lcdNumberAccept->display(accept);
+        ui->lcdNumberReject->display(reject);
+        ui->lcdNumberNext->display(next);
     }
 }
 
 void Widget::setNext()
 {
-    next->setValue(accept->value() + reject->value() + 1);
+    next = accept + reject + 1;
 }

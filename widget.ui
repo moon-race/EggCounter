@@ -28,14 +28,8 @@
      <layout class="QGridLayout" name="gridLayoutAccept">
       <item row="0" column="0" colspan="2">
        <widget class="QLCDNumber" name="lcdNumberAccept">
-        <property name="mode">
-         <enum>QLCDNumber::Dec</enum>
-        </property>
         <property name="segmentStyle">
          <enum>QLCDNumber::Flat</enum>
-        </property>
-        <property name="intValue" stdset="0">
-         <number>0</number>
         </property>
        </widget>
       </item>
@@ -67,14 +61,8 @@
      <layout class="QGridLayout" name="gridLayoutReject">
       <item row="0" column="0" colspan="2">
        <widget class="QLCDNumber" name="lcdNumberReject">
-        <property name="mode">
-         <enum>QLCDNumber::Dec</enum>
-        </property>
         <property name="segmentStyle">
          <enum>QLCDNumber::Flat</enum>
-        </property>
-        <property name="intValue" stdset="0">
-         <number>0</number>
         </property>
        </widget>
       </item>
