@@ -33,4 +33,5 @@ HEADERS += \
 FORMS += \
         widget.ui
 
-RC_ICONS = EggCounter.ico
+ICON = EggCounter.icns
+# RC_ICONS = EggCounter.ico
